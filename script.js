@@ -1,8 +1,10 @@
 document.querySelector('.categories').innerHTML = "Loading cheats...";
-await fetch("https://raw.githubusercontent.com/Minesraft2/Blooket-Cheats/main/unobfuscated/Bookmarklets.html").then(async x => document.querySelector("#unobfuscated").contentDocument.write(await x.text().then(x => x.slice(0, x.indexOf("<style")))));
+const isAuto = new URLSearchParams(location.search).get("auto");
+await fetch(`https://raw.githubusercontent.com/Minesraft2/Blooket-Cheats/main/${isAuto ? "autoupdate" : "unobfuscated"}/Bookmarklets.html`).then(async x => document.querySelector("#unobfuscated").contentDocument.write(await x.text().then(x => x.slice(0, x.indexOf("<style")))));
 const unobfuscated = parseCheats(document.querySelector("#unobfuscated"));
 window.a = unobfuscated
-
+swap.innerText = isAuto ? "Normal Bookmarks" : "Auto Updating Bookmarks (Experimental)";
+swap.addEventListener("click", e => window.location.search = isAuto ? "" : "?auto=1");
 document.querySelector('.categories').innerHTML = "";
 const icons = parseIcons(document.querySelector("#unobfuscated"));
 
